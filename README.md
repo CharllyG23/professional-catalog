@@ -1,8 +1,14 @@
-# Projeto Frontend - Nuxt 3
+# Projeto Frontend - Nuxt 4 - Typescript
+# Catálogo de Profissionais
+<img width="1508" height="902" alt="image" src="https://github.com/user-attachments/assets/fcfbb4df-5a10-4223-a524-738c07973695" />
+<hr>
 
-Este projeto foi desenvolvido com Nuxt 3, focado em organização de código, escalabilidade e boas práticas de performance.
+<img width="1753" height="899" alt="image" src="https://github.com/user-attachments/assets/c2490144-95e2-4d87-b7f6-c754e7c63b74" />
 
-# ⚙️ Funcionalidades
+
+Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, escalabilidade e boas práticas de performance.
+
+## ⚙️ Funcionalidades
 
 - Listagem de profissionais
 - Filtros por profissão e ordenação
@@ -10,8 +16,9 @@ Este projeto foi desenvolvido com Nuxt 3, focado em organização de código, es
 - Paginação com carregamento incremental
 - Visualização de detalhes via drawer
 
-# 📁 Estrutura do projeto
+## 📁 Estrutura do projeto
 
+```bash
 .
 ├── components/        # Componentes reutilizáveis da UI
 │   ├── ProfessionalCard.vue
@@ -41,6 +48,7 @@ Este projeto foi desenvolvido com Nuxt 3, focado em organização de código, es
 │
 ├── nuxt.config.ts     # Configuração principal do Nuxt
 └── package.json       # Dependências e scripts do projeto
+```
 
 # 🤖 Uso de IA
 
@@ -53,20 +61,18 @@ A IA utilizada neste projeto foi o ChatGPT como ferramenta de apoio.
 Todas as sugestões foram analisadas, adaptadas e validadas manualmente antes da implementação.
 
 # 🚀 Como rodar o projeto
+#clone the repository
+```sh
+git clone 
+```
+### Install dependencies
 
 ```sh
 npm install
 ```
-
 ### Compilar e Hot-Reload para Desenvolvimento
+#Start the development server on `http://localhost:3000`:
 
 ```sh
 npm run dev
-```
-Start the development server on `http://localhost:3000`:
-
-### Checar Tipo, Compilar e Minificar para Produção
-
-```sh
-npm run build
 ```
