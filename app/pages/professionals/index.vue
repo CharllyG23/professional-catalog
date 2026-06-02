@@ -58,6 +58,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { useProfessionals } from '~/composables/useProfessionals'
 
+useSeoMeta({
+  title: 'Professional Catalog',
+  description: 'Encontre profissionais qualificados através de filtros, busca e ordenação.',
+  ogTitle: 'Professional Catalog',
+  ogDescription: 'Catálogo online de profissionais.',
+  ogType: 'website'
+})
+
 const loading = ref(true)
 const router = useRouter()
 const route = useRoute()
