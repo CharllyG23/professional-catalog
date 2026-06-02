@@ -1,12 +1,13 @@
 # Projeto Frontend - Nuxt 4 - Typescript
 # Catálogo de Profissionais
+Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, escalabilidade e boas práticas de performance.
+- Link do projeto https://professional-catalog-git-main-charllyg23s-projects.vercel.app/
+<hr>
 <img width="1508" height="902" alt="image" src="https://github.com/user-attachments/assets/fcfbb4df-5a10-4223-a524-738c07973695" />
 <hr>
 
 <img width="1753" height="899" alt="image" src="https://github.com/user-attachments/assets/c2490144-95e2-4d87-b7f6-c754e7c63b74" />
 
-
-Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, escalabilidade e boas práticas de performance.
 
 ## ⚙️ Funcionalidades
 
@@ -15,6 +16,20 @@ Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, es
 - Busca por nome
 - Paginação com carregamento incremental
 - Visualização de detalhes via drawer
+
+## 🧠 Decisões Técnicas
+ - Arquitetura baseada em componentes
+
+A interface foi dividida em componentes reutilizáveis e independentes, como catálogo, cards, drawer, filtros e busca. Essa abordagem facilita manutenção, testes futuros e evolução da aplicação.
+
+ - Uso de Composables
+
+A lógica de negócio foi extraída para composables (useProfessionals e useProfessionalsDetails), mantendo os componentes focados na apresentação e melhorando a separação de responsabilidades.
+
+- Estado compartilhado através da URL
+
+A abertura do perfil é controlada por query params (?id=), permitindo compartilhamento de links, navegação pelo histórico do navegador e restauração de estado após atualização da página.
+<hr>
 
 ## 📁 Estrutura do projeto
 
