@@ -24,7 +24,7 @@
       class="professional-catalog__content"
       :class="`professional-catalog__content--${viewMode}`"
     >
-    <ProfessionalCard
+    <CatalogProfessionalCard
       v-for="professional in professionals"
       :key="professional.id"
       :professional="professional"

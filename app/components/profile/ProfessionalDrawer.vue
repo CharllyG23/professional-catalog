@@ -21,7 +21,7 @@
           </div>
 
           <div class="professional-drawer__content">
-            <ProfessionalProfile 
+            <ProfileProfessionalProfile 
               v-if="professional" 
               :professional="professional" 
             />

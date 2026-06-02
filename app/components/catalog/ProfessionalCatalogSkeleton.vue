@@ -1,6 +1,6 @@
 <template>
   <section class="professional-catalog-skeleton">
-    <ProfessionalCardSkeleton
+    <CatalogProfessionalCardSkeleton
       v-for="index in 12"
       :key="index"
     />

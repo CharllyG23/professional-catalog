@@ -1,5 +1,5 @@
 <template>
   <main>
-    <HomeHero />
+    <LayoutHomeHero />
   </main>
 </template>

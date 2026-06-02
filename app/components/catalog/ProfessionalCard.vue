@@ -40,7 +40,7 @@
 
       <div class="professional-card__footer">
         <p class="professional-card__price">
-          R${{ professional.price }}
+          {{ formatCurrency(professional.price) }}
         </p>
 
         <button 
@@ -57,6 +57,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Professional } from '~/types/professional'
+import { formatCurrency } from '~/utils/formatCurrency'
 
 const props = defineProps<{
   professional: Professional
@@ -78,14 +79,14 @@ const prefetchDrawer = () => {
   if (preloadedDrawer) return
 
   preloadedDrawer = true
-  import('~/components/ProfessionalDrawer.vue')
+  import('~/components/profile/ProfessionalDrawer.vue')
 }
 </script>
 
 <style scoped lang="scss">
 .professional-card {
-  overflow: hidden;
-  background: white;
+  overflow: hidden;  
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   transition:

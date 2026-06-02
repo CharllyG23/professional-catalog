@@ -36,7 +36,7 @@
         </div>
 
         <div class="professional-profile__stat">
-          💰 R$ {{ professional.price }}
+          💰 {{ formatCurrency(professional.price) }}
         </div>
       </div>
 
@@ -69,6 +69,7 @@
 
 <script setup lang="ts">
 import type { Professional } from '~/types/professional'
+import { formatCurrency } from '~/utils/formatCurrency'
 
 defineProps<{
   professional: Professional

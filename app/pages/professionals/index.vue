@@ -1,13 +1,13 @@
 <template>
   <section>
-    <ProfessionalHeader />
+    <CatalogProfessionalHeader />
     <div class="professional-toolbar">
       <div class="professional-toolbar__top">
-        <ProfessionalSearch v-model="search" />
-        <ProfessionalSort v-model="sort" />
+        <FiltersProfessionalSearch v-model="search" />
+        <FiltersProfessionalSort v-model="sort" />
       </div>
 
-      <ProfessionalProfession v-model="profession" :professions="professionCounts"/>
+      <FiltersProfessionalProfession v-model="profession" :professions="professionCounts"/>
     </div>
 
     <section class="professionals-results">
@@ -29,15 +29,15 @@
         </button>
       </div>
 
-      <ProfessionalCatalogSkeleton v-if="loading" />
-      <ProfessionalCatalog 
+      <CatalogProfessionalCatalogSkeleton v-if="isLoading" />
+      <CatalogProfessionalCatalog 
 				v-else 
 				:professionals="visibleProfessionals" 
 				@select="openProfessional"
 				/>
 
-      <div v-if="!loading && isLoadingMore" class="professional-skeleton-grid">
-        <ProfessionalCardSkeleton v-for="item in 6" :key="item" />
+      <div v-if="!isLoading && isLoadingMore" class="professional-skeleton-grid">
+        <CatalogProfessionalCardSkeleton v-for="item in 6" :key="item" />
       </div>
       
       <button
@@ -50,8 +50,8 @@
       </button>
     </section>
 
-    <ProfessionalEmptyState v-if="showEmptyState" />
-		<ProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
+    <CatalogProfessionalEmptyState v-if="showEmptyState" />
+		<ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
   </section>
 </template>
 <script setup lang="ts">
@@ -66,7 +66,6 @@ useSeoMeta({
   ogType: 'website'
 })
 
-const loading = ref(true)
 const router = useRouter()
 const route = useRoute()
 
@@ -80,6 +79,7 @@ const {
   hasMore,
   isLoadingMore,
   loadMore,
+  isLoading,
   hasActiveFilters,
   clearFilters
 } = useProfessionals()
@@ -91,7 +91,8 @@ const loadMoreLabel = computed(() =>
 )
 
 const showEmptyState = computed(() =>
-  !loading.value &&
+  !isLoading.value &&
+  !isLoadingMore.value &&
   filteredProfessionals.value.length === 0
 )
 const selectedProfessionalId = computed(() => {
@@ -107,12 +108,6 @@ const openProfessional = (id: number) => {
     }
   })
 }
-
-onMounted(async () => {
-  loading.value = true
-  await new Promise(resolve => requestAnimationFrame(resolve))
-  loading.value = false
-})
 </script>
 <style scoped lang="scss">
 .professionals-results {
