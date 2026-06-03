@@ -1,6 +1,7 @@
 import { computed, ref, type Ref } from 'vue'
 import type { Professional } from '~/types/professional'
 import type { SortOption } from '~/types/sort'
+import { normalizeText } from '~/utils/text'
 
 export const useProfessionalFilters = (
   professionals: Ref<Professional[]>
@@ -13,21 +14,21 @@ export const useProfessionalFilters = (
     let result = [...professionals.value]
 
     if (search.value.trim()) {
-      const term = search.value.toLowerCase()
+      const normalizedTerm = normalizeText(search.value)
 
-      result = result.filter(
-        professional =>
-          professional.name.toLowerCase().includes(term) ||
-          professional.profession.toLowerCase().includes(term)
+      result = result.filter(({ name, profession }) =>
+        normalizeText(name).includes(normalizedTerm) ||
+        normalizeText(profession).includes(normalizedTerm)
       )
     }
 
     if (profession.value !== 'all') {
       result = result.filter(
-        professional => professional.profession === profession.value
+        professional =>
+          normalizeText(professional.profession) ===
+          normalizeText(profession.value)
       )
     }
-
     const sortStrategies = {
       price_asc: (a: Professional, b: Professional) => a.price - b.price,
       price_desc: (a: Professional, b: Professional) => b.price - a.price,
