@@ -20,8 +20,7 @@ Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, es
 ## 🧠 Decisões Técnicas
  - Arquitetura baseada em componentes
 
-A interface foi dividida em componentes reutilizáveis e independentes, como catálogo, cards, drawer, filtros e busca. Essa abordagem facilita manutenção, testes futuros e evolução da aplicação.
-
+A interface foi dividida em componentes reutilizáveis e independentes, como catálogo, cards, drawer, filtros e busca. Essa abordagem facilita manutenção futuras.
  - Uso de Composables
 
 A lógica de negócio foi extraída para composables (useProfessionals e useProfessionalsDetails), mantendo os componentes focados na apresentação e melhorando a separação de responsabilidades.
@@ -29,6 +28,17 @@ A lógica de negócio foi extraída para composables (useProfessionals e useProf
 - Estado compartilhado através da URL
 
 A abertura do perfil é controlada por query params (?id=), permitindo compartilhamento de links, navegação pelo histórico do navegador e restauração de estado após atualização da página.
+
+- Criação de utilitários reutilizáveis
+  
+`formatCurrency` para padronização de valores monetários
+
+## 🧪 Testes
+
+- Vitest
+- Testes focados na lógica de negócio
+- Validação de filtros e ordenação
+
 <hr>
 
 ## 📁 Estrutura do projeto
@@ -43,6 +53,12 @@ A abertura do perfil é controlada por query params (?id=), permitindo compartil
 ├── composables/       # Lógica de negócio reutilizável
 │   ├── useProfessionals.ts
 │   ├── useProfessionalsDetails.ts
+│
+├── services/          # Camada de acesso a dados (abstração do backend)
+│   ├── professional.service.ts
+│
+├── tests/             # Testes unitários (Vitest)
+│   ├── useProfessionalFilters.spec.ts
 │
 ├── pages/             # Rotas da aplicação (Nuxt routing automático)
 │   ├── index.vue
