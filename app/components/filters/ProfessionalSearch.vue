@@ -13,11 +13,13 @@
       </svg>
 
       <input
+        id="search"
+        aria-label="Buscar profissionais"
         class="professional-search__input"
         type="text"
-        id="search"
+        placeholder="Busca por nome ou profissão"
         v-model="search"
-      >
+      />
       <button
         v-if="search"
         class="professional-search__clear"
@@ -56,7 +58,8 @@
   &__input {
     width: 100%;
     height: 46px;
-    padding: 0 var(--space-8);
+    padding-left: calc(var(--space-4) + 18px + var(--space-3));
+    padding-right: var(--space-8);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     font-size: var(--font-md);
