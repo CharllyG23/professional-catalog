@@ -21,10 +21,19 @@
           </div>
 
           <div class="professional-drawer__content">
-            <ProfileProfessionalProfile 
-              v-if="professional" 
-              :professional="professional" 
-            />
+            <Transition
+              name="drawer-content"
+              mode="out-in"
+            >
+              <ProfileProfessionalProfile
+                v-if="professional"
+                :professional="professional"
+              />
+
+              <ProfileProfessionalDrawerSkeleton
+                v-else
+              />
+            </Transition>
           </div>
         </div>
       </div>
@@ -77,21 +86,21 @@ onBeforeUnmount(() => {
 
   &__panel {
     position: relative;
-
     width: 100%;
     max-width: 560px;
-    height: 100%;
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     background: var(--color-bg);
     box-shadow: -20px 0 50px rgb(0 0 0 / 15%);
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
   }
 
   &__content {
     overflow-y: auto;
     overscroll-behavior: contain;
+    flex: 1;
   }
 
   &__topbar {
@@ -104,7 +113,6 @@ onBeforeUnmount(() => {
   &__close {
     width: 42px;
     height: 42px;
-
     display: grid;
     place-items: center;
     border: 0;
@@ -125,14 +133,27 @@ onBeforeUnmount(() => {
 
 .drawer-enter-active .professional-drawer__panel,
 .drawer-leave-active .professional-drawer__panel {
-  transition: transform var(--transition-slow)
-    cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 350ms cubic-bezier(.22, 1, .36, 1),
+    opacity 350ms ease;
 }
 
 .drawer-enter-from .professional-drawer__panel,
 .drawer-leave-to .professional-drawer__panel {
-  transform: translateX(100%);
+  transform: translateX(40px);
+  opacity: 0;
 }
+
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: background-color 300ms ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  background: rgb(0 0 0 / 0%);
+}
+
 @media (max-width: 600px) {
   .professional-drawer {
     &__panel {

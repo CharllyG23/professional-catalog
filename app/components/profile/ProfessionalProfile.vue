@@ -82,10 +82,13 @@ defineProps<{
   background: var(--color-bg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 
   &__cover {
     width: 100%;
-    height: 220px;
+    height: 200px;
     overflow: hidden;
   }
 
@@ -96,14 +99,15 @@ defineProps<{
   }
 
   &__body {
+    flex: 1;
     background: var(--color-surface);
     position: relative;
     padding: 0 var(--space-8) var(--space-8);
   }
 
   &__avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: var(--radius-round);
     border: 5px solid var(--color-bg);
     object-fit: cover;
@@ -179,8 +183,10 @@ defineProps<{
   }
 
   &__footer {
+    margin-top: auto;
     padding: var(--space-8);
     border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
   }
 
   &__button {
