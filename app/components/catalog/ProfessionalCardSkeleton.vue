@@ -20,11 +20,13 @@
   background: var(--color-bg);
 
   &__image {
-    height: 220px;
+    width: 100%;
+    min-height: 180px;
+    aspect-ratio: 16 / 9;
   }
 
   &__content {
-    padding: var(--space-4);
+    padding: var(--space-3);
   }
 
   &__image,

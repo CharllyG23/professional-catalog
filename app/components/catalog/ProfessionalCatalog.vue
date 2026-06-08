@@ -107,6 +107,10 @@ const isGridViewActive = computed(() => {
 
 @media (max-width: 768px) {
   .professional-catalog {
+    &__view-toggle {
+      display: none;
+    }
+    
     &__header {
       flex-direction: column;
       align-items: flex-start;

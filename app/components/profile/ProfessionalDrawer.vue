@@ -123,26 +123,16 @@ onBeforeUnmount(() => {
   }
 }
 
-.drawer-enter-active,
-.drawer-leave-active {
-  transition: opacity var(--transition-base);
+.drawer-enter-active .professional-drawer__panel,
+.drawer-leave-active .professional-drawer__panel {
+  transition: transform var(--transition-slow)
+    cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.drawer-enter-active .drawer__panel,
-.drawer-leave-active .drawer__panel {
-  transition: transform var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.drawer-enter-from,
-.drawer-leave-to {
-  opacity: 0;
-}
-
-.drawer-enter-from .drawer__panel,
-.drawer-leave-to .drawer__panel {
+.drawer-enter-from .professional-drawer__panel,
+.drawer-leave-to .professional-drawer__panel {
   transform: translateX(100%);
 }
-
 @media (max-width: 600px) {
   .professional-drawer {
     &__panel {

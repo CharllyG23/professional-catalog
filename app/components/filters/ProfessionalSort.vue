@@ -1,17 +1,21 @@
 <template>
   <div class="professional-sort">
-    <select v-model="sort" class="professional-sort__select">
-      <option 
+    <select
+      id="professional-sort"
+      v-model="sort"
+      class="professional-sort__select"
+      aria-label="Ordenar profissionais"
+    >
+      <option
         v-for="option in sortOptions"
         :key="option.value"
-        :value="option.value" 
+        :value="option.value"
       >
         {{ option.label }}
       </option>
     </select>
   </div>
 </template>
-
 <script setup lang="ts">
 import type { SortOption } from '~/types/sort'
 

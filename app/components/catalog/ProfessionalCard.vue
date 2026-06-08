@@ -105,12 +105,12 @@ const prefetchDrawer = () => {
 
   &--list {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 140px 1fr;
   }
 
   &__image {
     width: 100%;
-    height: 220px;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
   }
 
@@ -119,10 +119,16 @@ const prefetchDrawer = () => {
     min-height: 180px;
   }
 
+  &--grid &__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
-    padding: var(--space-4);
+    padding: var(--space-3);
   }
 
   &__header {
@@ -150,7 +156,6 @@ const prefetchDrawer = () => {
   }
 
   &__description {
-    margin-top: var(--space-3);
     color: var(--color-text-muted);
     font-size: var(--font-sm);
     display: -webkit-box;
@@ -173,11 +178,10 @@ const prefetchDrawer = () => {
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
-    padding-top: var(--space-4);
   }
 
   &__price {
-    font-size: var(--font-xl);
+    font-size: var(--font-lg);
     font-weight: var(--font-bold);
     color: var(--color-text);
   }
@@ -204,7 +208,8 @@ const prefetchDrawer = () => {
     }
 
     &--list &__image {
-      height: 220px;
+      height: 160px;
+      min-height: unset;
     }
   }
 }

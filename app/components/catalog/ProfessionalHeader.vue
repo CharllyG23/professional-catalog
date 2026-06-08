@@ -11,9 +11,9 @@
 		</button>
 
 		<div class="professionals-header__content">
-			<h1 class="professionals-header__title">
+			<h2 class="professionals-header__title">
 				Profissionais para cada necessidade
-			</h1>
+			</h2>
 			<p class="professionals-header__subtitle">
 				Descubra talentos perto de você.
 			</p>

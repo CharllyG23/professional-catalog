@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <main>
     <CatalogProfessionalHeader />
     <div class="professional-toolbar">
       <div class="professional-toolbar__top">
@@ -12,13 +12,13 @@
 
     <section class="professionals-results">
       <div class="professionals-results__header">
-        <h4 class="professionals-results__title">
+        <p class="professionals-results__title">
           Exibindo
           <strong>{{ visibleProfessionals.length }}</strong>
           de
           <strong>{{ filteredProfessionals.length }}</strong>
           profissionais
-        </h4>
+        </p>
 
         <button
           v-if="hasActiveFilters"
@@ -52,17 +52,19 @@
 
     <CatalogProfessionalEmptyState v-if="showEmptyState" />
 		<ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
-  </section>
+  </main>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useProfessionals } from '~/composables/useProfessionals'
 
 useSeoMeta({
-  title: 'Professional Catalog',
-  description: 'Encontre profissionais qualificados através de filtros, busca e ordenação.',
-  ogTitle: 'Professional Catalog',
-  ogDescription: 'Catálogo online de profissionais.',
+  title: 'Profissionais | Professional Catalog',
+  description:
+    'Encontre profissionais qualificados através de filtros, busca e ordenação.',
+  ogTitle: 'Profissionais | Professional Catalog',
+  ogDescription:
+    'Catálogo online de profissionais.',
   ogType: 'website'
 })
 
@@ -95,6 +97,7 @@ const showEmptyState = computed(() =>
   !isLoadingMore.value &&
   filteredProfessionals.value.length === 0
 )
+
 const selectedProfessionalId = computed(() => {
   const id = route.query.id
   return id ? Number(id) : null
