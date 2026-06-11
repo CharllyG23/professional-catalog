@@ -6,8 +6,6 @@ Este projeto foi desenvolvido com Nuxt 4, focado em organização de código, es
 <img width="1508" height="902" alt="image" src="https://github.com/user-attachments/assets/fcfbb4df-5a10-4223-a524-738c07973695" />
 <hr>
 
-<img width="1753" height="899" alt="image" src="https://github.com/user-attachments/assets/c2490144-95e2-4d87-b7f6-c754e7c63b74" />
-
 
 ## ⚙️ Funcionalidades
 
