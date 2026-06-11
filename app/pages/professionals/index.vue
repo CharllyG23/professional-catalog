@@ -2,6 +2,7 @@
   <main>
     <CatalogProfessionalHeader />
     <div class="professional-toolbar">
+      <h4>Filtre os profissionais</h4>
       <div class="professional-toolbar__top">
         <FiltersProfessionalSearch v-model="search" />
         <FiltersProfessionalSort v-model="sort" />
@@ -52,6 +53,7 @@
 
     <CatalogProfessionalEmptyState v-if="showEmptyState" />
 		<ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
+    <LayoutFooter />
   </main>
 </template>
 <script setup lang="ts">
