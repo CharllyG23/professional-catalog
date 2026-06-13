@@ -1,44 +1,45 @@
 <template>
   <section class="professionals-header">
     <div class="professionals-header__content">
-      <button
+      <NuxtLink
+        to="/"
         class="professionals-header__back"
-        @click="router.push('/')"
       >
         <span class="professionals-header__back-icon">←</span>
         Voltar
-      </button>
+      </NuxtLink>
 
-      <div>
-        <h2 class="professionals-header__title">
+      <header class="professionals-header__text">
+        <h1 class="professionals-header__title">
           Profissionais para cada necessidade
-        </h2>
+        </h1>
 
         <p class="professionals-header__subtitle">
           Descubra talentos perto de você.
         </p>
-      </div>
+      </header>
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-const router = useRouter()
-</script>
-
 <style scoped lang="scss">
 .professionals-header {
   width: 100%;
-  background: white;
+  background: var(--color-surface);
   border-bottom: 1.5px solid var(--color-primary);
+  contain: layout style;
 
   &__content {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-4);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-4);
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
   }
 
   &__back {
@@ -46,35 +47,47 @@ const router = useRouter()
     align-items: center;
     gap: var(--space-2);
     padding: 0.625rem 0.875rem;
-    border: none;
     border-radius: var(--radius-sm);
-    background: transparent;
+    text-decoration: none;
     color: var(--color-primary);
-    cursor: pointer;
+    font-weight: var(--font-medium);
+    transition:
+      opacity var(--transition-base),
+      background-color var(--transition-base);
 
     &:hover {
+      opacity: 0.85;
       background: var(--color-soft-bg);
     }
+  }
+
+  &__back-icon {
+    font-size: var(--font-lg);
+    line-height: 1;
   }
 
   &__title {
     margin: 0;
     color: var(--color-text);
-    font-size: var(--font-2xl);
+    font-size: var(--font-xl);
     font-weight: 800;
   }
 
   &__subtitle {
     margin: 0;
     color: var(--color-text-muted);
+    font-size: var(--font-md);
+    line-height: 1.5;
   }
-} 
+}
 
 @media (max-width: 768px) {
   .professionals-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
+    &__content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
 
     &__title {
       font-size: var(--font-xl);
@@ -85,7 +98,7 @@ const router = useRouter()
     }
 
     &__back {
-      margin-top: 0;
+      padding: var(--space-2) var(--space-3);
     }
   }
 }

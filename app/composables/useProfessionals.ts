@@ -23,10 +23,12 @@ export const useProfessionals = () => {
   const {
     search,
     sort,
+    city,
     profession,
     filteredProfessionals,
     professionCounts,
     hasActiveFilters,
+    cityOptions,
     clearFilters
   } = useProfessionalFilters(professionals)
 
@@ -65,6 +67,7 @@ export const useProfessionals = () => {
   return {
     search,
     sort,
+    city,
     profession,
     filteredProfessionals,
     visibleProfessionals,
@@ -73,6 +76,7 @@ export const useProfessionals = () => {
     hasMore,
     isLoading,
     isLoadingMore,
+    cityOptions,
     hasActiveFilters,
     clearFilters: handleClearFilters
   }

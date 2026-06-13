@@ -68,6 +68,10 @@
       box-shadow var(--transition-base);
     background: var(--color-surface);
 
+    &:hover {
+      border-color: var(--color-primary);
+    }
+
     &:focus {
       outline: none;
       border-color: var(--color-primary);

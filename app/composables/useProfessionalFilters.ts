@@ -8,6 +8,7 @@ export const useProfessionalFilters = (
 ) => {
   const search = ref('')
   const sort = ref<SortOption>('rating_desc')
+  const city = ref('all')
   const profession = ref('all')
 
   const filteredProfessionals = computed(() => {
@@ -29,6 +30,15 @@ export const useProfessionalFilters = (
           normalizeText(profession.value)
       )
     }
+
+    if (city.value !== 'all') {
+      result = result.filter(
+        professional =>
+          normalizeText(professional.city) ===
+          normalizeText(city.value)
+      )
+    }
+
     const sortStrategies = {
       price_asc: (a: Professional, b: Professional) => a.price - b.price,
       price_desc: (a: Professional, b: Professional) => b.price - a.price,
@@ -67,25 +77,46 @@ export const useProfessionalFilters = (
     ]
   })
 
+  const cityOptions = computed(() => [
+    {
+      value: 'all',
+      label: 'Todas as cidades'
+    },
+    ...[...new Set(
+      professionals.value.map(
+        professional => professional.city
+      )
+    )]
+      .sort()
+      .map(city => ({
+        value: city,
+        label: city
+      }))
+  ])
+
   const hasActiveFilters = computed(
     () =>
       search.value.trim() !== '' ||
       profession.value !== 'all' ||
+      city.value !== 'all' ||
       sort.value !== 'rating_desc'
   )
 
   const clearFilters = () => {
     search.value = ''
     sort.value = 'rating_desc'
+    city.value = 'all' 
     profession.value = 'all'
   }
 
   return {
     search,
     sort,
+    city,
     profession,
     filteredProfessionals,
     professionCounts,
+    cityOptions,
     hasActiveFilters,
     clearFilters
   }

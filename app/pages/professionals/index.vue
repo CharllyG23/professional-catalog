@@ -1,13 +1,13 @@
 <template>
-  <main>
+  <main class="professionals-page">
     <CatalogProfessionalHeader />
     <div class="professional-toolbar">
       <h4>Filtre os profissionais</h4>
       <div class="professional-toolbar__top">
         <FiltersProfessionalSearch v-model="search" />
+        <FiltersProfessionalCitySelect v-model="city" :cities="cityOptions" />
         <FiltersProfessionalSort v-model="sort" />
       </div>
-
       <FiltersProfessionalProfession v-model="profession" :professions="professionCounts"/>
     </div>
 
@@ -32,10 +32,10 @@
 
       <CatalogProfessionalCatalogSkeleton v-if="isLoading" />
       <CatalogProfessionalCatalog 
-				v-else 
-				:professionals="visibleProfessionals" 
-				@select="openProfessional"
-				/>
+        v-else 
+        :professionals="visibleProfessionals" 
+        @select="openProfessional"
+        />
 
       <div v-if="!isLoading && isLoadingMore" class="professional-skeleton-grid">
         <CatalogProfessionalCardSkeleton v-for="item in 6" :key="item" />
@@ -52,9 +52,9 @@
     </section>
 
     <CatalogProfessionalEmptyState v-if="showEmptyState" />
-		<ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
-    <LayoutFooter />
+    <ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
   </main>
+  <LayoutFooter />
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -76,6 +76,7 @@ const route = useRoute()
 const {
   search,
   sort,
+  city,
   profession,
   filteredProfessionals,
   visibleProfessionals,
@@ -85,6 +86,7 @@ const {
   loadMore,
   isLoading,
   hasActiveFilters,
+  cityOptions,
   clearFilters
 } = useProfessionals()
 
@@ -115,63 +117,69 @@ const openProfessional = (id: number) => {
 }
 </script>
 <style scoped lang="scss">
-.professionals-results {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--space-4);
+.professionals-page {
+  min-height: 100vh;
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-6);
-  }
+  .professionals-results {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
 
-  &__title {
-    margin: 0;
-    font-size: var(--font-md);
-    font-weight: var(--font-regular);
-    color: var(--color-text-muted);
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-6);
+    }
 
-    strong {
-      color: var(--color-text);
-      font-weight: var(--font-bold);
+    &__title {
+      margin: 0;
+      font-size: var(--font-md);
+      font-weight: var(--font-regular);
+      color: var(--color-text-muted);
+
+      strong {
+        color: var(--color-text);
+        font-weight: var(--font-bold);
+      }
+    }
+
+    &__clear {
+      border: none;
+      background: transparent;
+      color: var(--color-primary);
+      font-weight: var(--font-semibold);
+      cursor: pointer;
+      transition: color var(--transition-base);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__load-more {
+      display: block;
+      margin: var(--space-8) auto;
+      padding: var(--space-4) var(--space-8);
+      border: none;
+      border-radius: var(--radius-md);
+      background: var(--color-primary);
+      color: var(--color-surface);
+      cursor: pointer;
+      transition: opacity var(--transition-base);
+
+      &:hover {
+        background: var(--color-primary-hover);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
     }
   }
 
-  &__clear {
-    border: none;
-    background: transparent;
-    color: var(--color-primary);
-    font-weight: var(--font-semibold);
-    cursor: pointer;
-    transition: color var(--transition-base);
 
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &__load-more {
-    display: block;
-    margin: var(--space-8) auto;
-    padding: var(--space-4) var(--space-8);
-    border: none;
-    border-radius: var(--radius-md);
-    background: var(--color-primary);
-    color: var(--color-surface);
-    cursor: pointer;
-    transition: opacity var(--transition-base);
-
-    &:hover {
-      background: var(--color-primary-hover);
-    }
-
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-  }
 }
 
 .professional-skeleton-grid {
@@ -188,9 +196,9 @@ const openProfessional = (id: number) => {
 
   &__top {
     display: grid;
-    grid-template-columns: 1fr 240px;
+    grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) minmax(180px, 1fr);
     gap: var(--space-4);
-    align-items: start;
+    align-items: center;
   }
 }
 
@@ -198,6 +206,7 @@ const openProfessional = (id: number) => {
   .professional-toolbar {
     &__top {
       grid-template-columns: 1fr;
+      gap: var(--space-3);
     }
   }
 }

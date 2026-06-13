@@ -8,7 +8,6 @@
       :src="professional.photo"
       :alt="professional.name"
       class="professional-card__image"
-      loading="lazy"
       decoding="async"
     >
 
@@ -95,7 +94,10 @@ const prefetchDrawer = () => {
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+    border-color: var(--color-primary);
+    box-shadow:
+      0 0 0 2px rgba(26, 122, 110, 0.1),
+      var(--shadow-sm);
   }
 
   &--grid {
@@ -167,8 +169,8 @@ const prefetchDrawer = () => {
 
   &__meta {
     display: flex;
+    align-items: center;
     gap: var(--space-4);
-    margin-top: var(--space-3);
     font-size: var(--font-xs);
     color: var(--color-text-muted);
   }
