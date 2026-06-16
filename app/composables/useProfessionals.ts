@@ -2,7 +2,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { professionalService } from '~/services/professional.service'
 import type { Professional } from '~/types/professional'
 
-const ITEMS_PER_PAGE = 24
+const ITEMS_PER_PAGE = 12
 
 export const useProfessionals = () => {
   const professionals = ref<Professional[]>([])

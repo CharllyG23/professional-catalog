@@ -51,13 +51,14 @@
     text-decoration: none;
     color: var(--color-primary);
     font-weight: var(--font-medium);
+    background-color: var(--color-surface);
     transition:
-      opacity var(--transition-base),
-      background-color var(--transition-base);
-
+      transform var(--transition-base),
+      background var(--transition-base);
+      
     &:hover {
-      opacity: 0.85;
-      background: var(--color-soft-bg);
+      background: var(--color-primary);
+      color: var(--color-soft-bg);
     }
   }
 

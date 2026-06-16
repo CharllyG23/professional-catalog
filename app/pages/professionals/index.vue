@@ -1,55 +1,46 @@
 <template>
   <main class="professionals-page">
     <CatalogProfessionalHeader />
-    <div class="professional-toolbar">
-      <h4>Filtre os profissionais</h4>
-      <div class="professional-toolbar__top">
-        <FiltersProfessionalSearch v-model="search" />
-        <FiltersProfessionalCitySelect v-model="city" :cities="cityOptions" />
-        <FiltersProfessionalSort v-model="sort" />
+    <section class="professionals-page__container">
+      <div class="professional-toolbar">
+        <h4>Filtre os profissionais</h4>
+        <div class="professional-toolbar__top">
+          <FiltersProfessionalSearch v-model="search" />
+          <FiltersProfessionalCitySelect v-model="city" :cities="cityOptions" />
+          <FiltersProfessionalSort v-model="sort" />
+        </div>
+        <FiltersProfessionalProfession v-model="profession" :professions="professionCounts"/>
       </div>
-      <FiltersProfessionalProfession v-model="profession" :professions="professionCounts"/>
-    </div>
 
-    <section class="professionals-results">
-      <div class="professionals-results__header">
-        <p class="professionals-results__title">
-          Exibindo
-          <strong>{{ visibleProfessionals.length }}</strong>
-          de
-          <strong>{{ filteredProfessionals.length }}</strong>
-          profissionais
-        </p>
-
-        <button
-          v-if="hasActiveFilters"
-          class="professionals-results__clear"
-          @click="clearFilters"
-        >
-          Limpar filtros
-        </button>
-      </div>
+      <ProfessionalResultsHeader
+        :visible-count="visibleProfessionals.length"
+        :total-count="filteredProfessionals.length"
+        :has-active-filters="hasActiveFilters"
+        @clear="clearFilters"
+      />
 
       <CatalogProfessionalCatalogSkeleton v-if="isLoading" />
-      <CatalogProfessionalCatalog 
-        v-else 
-        :professionals="visibleProfessionals" 
+      <CatalogProfessionalCatalog
+        v-else
+        :professionals="visibleProfessionals"
         @select="openProfessional"
-        />
+      />
 
       <div v-if="!isLoading && isLoadingMore" class="professional-skeleton-grid">
-        <CatalogProfessionalCardSkeleton v-for="item in 6" :key="item" />
+        <CatalogProfessionalCardSkeleton v-for="item in 6" :key="item"/>
       </div>
-      
-      <button
-        v-if="hasMore"
-        class="professionals-results__load-more"
-        :disabled="isLoadingMore"
-        @click="loadMore"
-      >
-        {{ loadMoreLabel }}
-      </button>
+
+      <ProfessionalLoadMoreButton
+        :show="hasMore"
+        :loading="isLoadingMore"
+        :label="loadMoreLabel"
+        @click="handleLoadMore"
+      />
     </section>
+
+    <button v-if="showBackToTop" class="back-to-top" @click="scrollToResults">
+      Rolar para acima
+    </button>
 
     <CatalogProfessionalEmptyState v-if="showEmptyState" />
     <ProfileProfessionalDrawer v-if="selectedProfessionalId" :professional-id="selectedProfessionalId"/>
@@ -57,8 +48,10 @@
   <LayoutFooter />
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useProfessionals } from '~/composables/useProfessionals'
+import ProfessionalResultsHeader from './ProfessionalResultsHeader.vue'
+import ProfessionalLoadMoreButton from './ProfessionalLoadMoreButton.vue'
 
 useSeoMeta({
   title: 'Profissionais | Professional Catalog',
@@ -72,6 +65,8 @@ useSeoMeta({
 
 const router = useRouter()
 const route = useRoute()
+const showBackToTop = ref(false)
+const hasLoadedMore = ref(false)
 
 const {
   search,
@@ -115,71 +110,44 @@ const openProfessional = (id: number) => {
     }
   })
 }
+
+const handleScroll = () => {
+  showBackToTop.value =
+    hasLoadedMore.value &&
+    window.scrollY > 1000
+}
+
+const scrollToResults = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+const handleLoadMore = async () => {
+  hasLoadedMore.value = true
+  await loadMore()
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
 </script>
 <style scoped lang="scss">
 .professionals-page {
   min-height: 100vh;
 
-  .professionals-results {
+  &__container {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 var(--space-4);
-
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: var(--space-6);
-    }
-
-    &__title {
-      margin: 0;
-      font-size: var(--font-md);
-      font-weight: var(--font-regular);
-      color: var(--color-text-muted);
-
-      strong {
-        color: var(--color-text);
-        font-weight: var(--font-bold);
-      }
-    }
-
-    &__clear {
-      border: none;
-      background: transparent;
-      color: var(--color-primary);
-      font-weight: var(--font-semibold);
-      cursor: pointer;
-      transition: color var(--transition-base);
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    &__load-more {
-      display: block;
-      margin: var(--space-8) auto;
-      padding: var(--space-4) var(--space-8);
-      border: none;
-      border-radius: var(--radius-md);
-      background: var(--color-primary);
-      color: var(--color-surface);
-      cursor: pointer;
-      transition: opacity var(--transition-base);
-
-      &:hover {
-        background: var(--color-primary-hover);
-      }
-
-      &:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-      }
-    }
+    padding-inline: var(--space-4);
   }
-
-
 }
 
 .professional-skeleton-grid {
@@ -190,10 +158,6 @@ const openProfessional = (id: number) => {
 }
 
 .professional-toolbar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--space-4);
-
   &__top {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(180px, 1fr) minmax(180px, 1fr);
@@ -202,7 +166,35 @@ const openProfessional = (id: number) => {
   }
 }
 
+.back-to-top {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-6);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  color: var(--color-primary);
+  font-size: var(--font-xs);
+  background-color: var(--color-soft-bg);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--transition-base),
+    background var(--transition-base);
+
+  &:hover {
+    background: var(--color-primary);
+    color: var(--color-soft-bg);
+    transform: translateY(-2px);
+  }
+}
+
 @media (max-width: 768px) {
+
   .professional-toolbar {
     &__top {
       grid-template-columns: 1fr;
